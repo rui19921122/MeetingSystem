@@ -2,7 +2,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {increment, doubleAsync} from '../../redux/modules/counter'
-import {Modal} from 'antd'
 
 // We can use Flow (http://flowtype.org/) to type our component's props
 // and state. For convenience we've included both regular propTypes and
@@ -21,11 +20,9 @@ interface Props {
 // that we can export the undecorated component for testing.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 export class HomeView extends React.Component<Props, any> {
-  // static propTypes = {
-  //   counter: PropTypes.number.isRequired,
-  //   doubleAsync: PropTypes.func.isRequired,
-  //   increment: PropTypes.func.isRequired
-  // };
+  constructor(props) {
+    super(props)
+  }
 
   render() {
     return (

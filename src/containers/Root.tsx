@@ -7,9 +7,6 @@ interface Props{
   routes:JSX.Element,
   store:Store
 }
-interface Window {
-  devToolsExtension:any,
-}
 
 export default class Root extends React.Component<Props,any> {
 
@@ -22,8 +19,9 @@ export default class Root extends React.Component<Props,any> {
   }
 
   get devTools () {
-    let __DEBUG__;
-    let __DEBUG_NEW_WINDOW__;
+    let __DEBUG__ = true;
+    let __DEBUG_NEW_WINDOW__ = true;
+    //删除上述两个语句，在生产环境中
     if (__DEBUG__) {
       if (__DEBUG_NEW_WINDOW__) {
         if (!(window as any).devToolsExtension) {
@@ -32,7 +30,7 @@ export default class Root extends React.Component<Props,any> {
           (window as any).devToolsExtension.open()
         }
       } else if (!(window as any).devToolsExtension) {
-        const DevTools = require('containers/DevTools').default
+        const DevTools = require('containers/DevTools').default;
         return <DevTools />
       }
     }
