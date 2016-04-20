@@ -2,6 +2,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {increment, doubleAsync} from '../../redux/modules/counter'
+import CustomMenu from '../../components/Menu'
 
 // We can use Flow (http://flowtype.org/) to type our component's props
 // and state. For convenience we've included both regular propTypes and
@@ -13,7 +14,8 @@ import {increment, doubleAsync} from '../../redux/modules/counter'
 interface Props {
   counter:number,
   doubleAsync:any,
-  increment:any
+  increment:any,
+  menu:any
 }
 
 // We avoid using the `@connect` decorator on the class definition so
@@ -27,6 +29,7 @@ export class HomeView extends React.Component<Props, any> {
   render() {
     return (
       <div className='container text-center'>
+        <CustomMenu props={this.props} />
         <div className='row'>
           <div className='col-xs-2 col-xs-offset-5'>
             <img

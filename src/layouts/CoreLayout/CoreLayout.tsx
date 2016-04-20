@@ -1,5 +1,7 @@
 import * as React from 'react'
+import {Row, Col} from 'antd'
 import '../../styles/core.scss'
+import CustomMenu from '../../components/Menu'
 
 // Note: Stateless/function components *will not* hot reload!
 // react-transform *only* works on component classes.
@@ -12,11 +14,16 @@ import '../../styles/core.scss'
 // define it with a plain javascript function...
 function CoreLayout({children}) {
   return (
-    <div className='page-container'>
-      <div className='view-container'>
-        {children}
+    <Row>
+      <Col className="header">
+        欢迎使用上海铁路局芜湖东站点名会系统网页模块
+      </Col>
+      <div className='page-container'>
+        <div className='view-container'>
+          {children}
+        </div>
       </div>
-    </div>
+    </Row>
   )
 }
 
