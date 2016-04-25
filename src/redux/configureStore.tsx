@@ -9,7 +9,8 @@ interface Window { devToolsExtension: any; }
 export default function configureStore(initialState = {}, history) {
   // Compose final middleware and use devtools in debug environment
   let middleware = applyMiddleware(thunk, routerMiddleware(history))
-  let __DEBUG__
+  let __DEBUG__ = true
+  //todo 删除debug语句，在生产环境中
   if (__DEBUG__) {
     const devTools = window['devToolsExtension']
       ? (window as any).devToolsExtension()

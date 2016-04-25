@@ -1,7 +1,8 @@
-/* @flow */
+///<reference path="../../../typings/browser.d.ts"/>
+
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {increment, doubleAsync} from '../../redux/modules/counter'
+import {Row, Col} from 'antd'
 import CustomMenu from '../../components/Menu'
 
 // We can use Flow (http://flowtype.org/) to type our component's props
@@ -11,53 +12,34 @@ import CustomMenu from '../../components/Menu'
 // NOTE: You can run `npm run flow:check` to check for any errors in your
 // code, or `npm i -g flow-bin` to have access to the binary globally.
 // Sorry Windows users :(.
-interface Props {
+interface Props extends React.Props<any> {
   counter:number,
   doubleAsync:any,
   increment:any,
-  menu:any
+  menu:any,
+  dispatch:Redux.Dispatch
 }
 
 // We avoid using the `@connect` decorator on the class definition so
 // that we can export the undecorated component for testing.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-export class HomeView extends React.Component<Props, any> {
+export class HomeView extends React.Component<Props, void> {
   constructor(props) {
     super(props)
   }
 
   render() {
     return (
-      <div className='container text-center'>
-        <CustomMenu props={this.props} />
-        <div className='row'>
-          <div className='col-xs-2 col-xs-offset-5'>
-            <img
-              alt='This is a duck, because Redux.'/>
-          </div>
-        </div>
-        <h1>Welcome to the React Redux Starter Kit</h1>
-        <h2>
-          Sample Counter:
-          {' '}
-          <span className={'counter--green'}>{this.props.counter}</span>
-        </h2>
-        <button className='btn btn-default' onClick={this.props.increment}>
-          Increment
-        </button>
-        {' '}
-        <button className='btn btn-default' onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
-      </div>
+      <Row>
+        <Col span="4">
+          <CustomMenu menu={this.props.menu} dispatch={this.props.dispatch}/>
+        </Col></Row>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  counter: state.counter
+  counter: state.counter,
+  menu: state.menu
 })
-export default connect((mapStateToProps), {
-  increment: () => increment(1),
-  doubleAsync
-})(HomeView)
+export default connect(mapStateToProps)(HomeView)

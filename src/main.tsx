@@ -8,6 +8,7 @@ import {syncHistoryWithStore} from 'react-router-redux'
 import makeRoutes from './routes/index'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
+import 'antd/lib/index.css'
 
 // Configure history for react-router
 let __BASENAME__;
@@ -31,7 +32,7 @@ const routes = makeRoutes(store)
 
 // Now that redux and react-router have been configured, we can render the
 // React application to the DOM!
-console.log(routes)
+
 ReactDOM.render(
   <Root history={history} routes={routes} store={store}/>,
   document.getElementById('root')

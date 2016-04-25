@@ -19,7 +19,7 @@ export default class Root extends React.Component<Props,any> {
   }
 
   get devTools () {
-    let __DEBUG__ = true;
+    let __DEBUG__ = true
     let __DEBUG_NEW_WINDOW__ = true;
     //删除上述两个语句，在生产环境中
     if (__DEBUG__) {

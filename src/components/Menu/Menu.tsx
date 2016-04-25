@@ -1,21 +1,29 @@
 /**
  * Created by Administrator on 4/20/2016.
  */
+///<reference path="../../../typings/browser.d.ts"/>
+
 import {Menu, Icon} from 'antd'
 import * as React from 'react'
 import {Link} from 'react-router'
 import {getMenu} from '../../redux/modules/menu'
 
-interface props {
-  menu:any
+interface props extends React.Props<any> {
+  menu:any,
+  dispatch:Redux.Dispatch,
 }
-export default class CustomMenu extends React.Component<props,any> {
+export default class CustomMenu extends React.Component<props, void> {
   constructor(props) {
     super(props);
-    if (this.props.menu.items.length > 0) {
-    } else {
-      props.dispatch(getMenu())
-    }
+  }
+
+  componentWillMount() {
+  };
+
+  componentDidMount() {
+    if(this.props.menu.get){}
+    else{
+    this.props.dispatch(getMenu())}
   }
 
   static processSingle(single, index) {
@@ -47,7 +55,6 @@ export default class CustomMenu extends React.Component<props,any> {
     return (
       <Menu
         mode="inline"
-        defaultSelectedKeys={[this.props.menu._menu]}
       >
         {this.props.menu.items.map(CustomMenu.process)}
       </Menu>
