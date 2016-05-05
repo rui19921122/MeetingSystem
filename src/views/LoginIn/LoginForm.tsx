@@ -6,13 +6,14 @@ import {login} from '../../redux/modules/login'
 export default class Login extends React.Component<any, any> {
     constructor(props) {
         super(props);
+        
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleSubmit(e) {
         e.preventDefault();
         const { dispatch } = this.props
-        
+
         // TODO: 解决这里无法引用this的错误
         let username = e.target.username.value
         let password = e.target.password.value
