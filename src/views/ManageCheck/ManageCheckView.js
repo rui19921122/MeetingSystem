@@ -6,7 +6,8 @@ const Menu_1 = require('../../components/Menu');
 const manage_check_1 = require('../../redux/modules/manage-check');
 const worker_1 = require('../../redux/modules/worker');
 const position_1 = require('../../redux/modules/position');
-class HomeView extends React.Component {
+const AddStudyWorkerForm_1 = require("./AddStudyWorkerForm");
+class ManageCheckView extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -38,9 +39,17 @@ class HomeView extends React.Component {
             lineHeight: '30px',
         };
         let callbackfn = (value, index, array) => {
-            return (React.createElement(antd_1.Radio, {key: value.id, style: radioStyle, value: value.id}, 
-                "  ", 
-                value.name));
+            let disabled;
+            const list = this.props.manage_check.person_list;
+            for (let i of this.props.worker.person) {
+                if (list.indexOf(i.id) >= 0) {
+                    disabled = true;
+                }
+                else {
+                    disabled = false;
+                }
+            }
+            return (React.createElement(antd_1.Radio, {key: value.id, style: radioStyle, value: value.id, disabled: disabled}, value.name));
         };
         if (this.props.worker.person.length > 0) {
         }
@@ -59,9 +68,22 @@ class HomeView extends React.Component {
             lineHeight: '30px',
         };
         let callbackfn = (value, index, array) => {
-            return (React.createElement(antd_1.Radio, {key: value.id, style: radioStyle, value: value.id}, 
-                "  ", 
-                value.name));
+            let disabled;
+            const list = this.props.manage_check.person_list;
+            if (list && list.length > 0) {
+                for (let i of this.props.worker.person) {
+                    if (list.indexOf(i.id)) {
+                        disabled = true;
+                    }
+                    else {
+                        disabled = false;
+                    }
+                }
+                return (React.createElement(antd_1.Radio, {key: value.id, style: radioStyle, value: value.id, disabled: disabled}, value.name));
+            }
+            else {
+                return;
+            }
         };
         if (this.props.worker.person.length > 0) {
         }
@@ -91,6 +113,8 @@ class HomeView extends React.Component {
     deleteButtonClicked(e) {
         let id = e.target.attributes['data-id'].value;
         this.props.dispatch(manage_check_1.actions.DeleteData(id));
+    }
+    addStudyWorker(e) {
     }
     render() {
         window.document.title = '预考勤模块';
@@ -142,21 +166,21 @@ class HomeView extends React.Component {
                 React.createElement(antd_1.Row, {type: "flex", align: 'center', className: "table"}, 
                     React.createElement(antd_1.Col, {span: '20'}, 
                         React.createElement(antd_1.Table, {dataSource: this.props.manage_check.items.person, columns: Columns, pagination: false}), 
-                        this.props.manage_check.items.id ? React.createElement(antd_1.Button, {onClick: event => this.props.dispatch(manage_check_1.actions.AddModalShow(true))}, "添加新学员") : '', 
+                        this.props.manage_check.items.id ?
+                            React.createElement(antd_1.Row, {type: 'flex', align: 'center'}, 
+                                React.createElement(antd_1.Button, {onClick: event => this.props.dispatch(manage_check_1.actions.AddModalShow(true))}, "添加新学员")
+                            )
+                            : '', 
                         React.createElement(antd_1.Modal, {title: "请选择代替的职工", footer: '', visible: this.props.manage_check.showModal, onCancel: this.props.dispatch(v => () => this.props.dispatch(manage_check_1.actions.showModal(false)))}, 
                             React.createElement(antd_1.Radio.Group, {defaultValue: '', onChange: event => this.props.dispatch(manage_check_1.actions.ReplaceData(this.props.manage_check.replaceId, event.target.value))}, this.getRadioSelect())
                         ), 
                         React.createElement(antd_1.Modal, {title: "请选择增加的职工", footer: '', visible: this.props.manage_check.addModalShow, onCancel: this.props.dispatch(v => () => this.props.dispatch(manage_check_1.actions.AddModalShow(false)))}, 
-                            React.createElement(antd_1.Row, null, "选择职工"), 
-                            React.createElement(antd_1.Radio.Group, {defaultValue: ''}, this.getAddRadioSelect()), 
-                            React.createElement(antd_1.Row, null, "选择岗位"), 
-                            React.createElement(antd_1.Radio.Group, {defaultValue: ''}, 
-                                this.getPositionSelect(), 
-                                React.createElement(antd_1.Button, null, "添加"))))
+                            React.createElement(AddStudyWorkerForm_1.default, {position: this.props.position, worker: this.props.worker, dispatch: this.props.dispatch, manage_check: this.props.manage_check})
+                        ))
                 ))));
     }
 }
-exports.HomeView = HomeView;
+exports.ManageCheckView = ManageCheckView;
 const mapStateToProps = (state) => ({
     menu: state.menu,
     manage_check: state.manage_check,
@@ -164,5 +188,5 @@ const mapStateToProps = (state) => ({
     position: state.position
 });
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = react_redux_1.connect(mapStateToProps)(HomeView);
+exports.default = react_redux_1.connect(mapStateToProps)(ManageCheckView);
 //# sourceMappingURL=ManageCheckView.js.map

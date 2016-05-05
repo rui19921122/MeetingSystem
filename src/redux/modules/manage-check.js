@@ -40,11 +40,13 @@ let DeleteData = (id) => ((dispatch, getState) => {
 });
 let ReplaceData = (id, replace) => ((dispatch, getState) => {
     let url = `/api/call_over/update-call-over-person/${id}`;
-    fetch(url, { method: 'post',
+    fetch(url, {
+        method: 'post',
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ replace: replace }) }).then(response => {
+        body: JSON.stringify({ replace: replace })
+    }).then(response => {
         if (response.status != 202) {
             antd_1.message.error("替换失败");
         }
@@ -58,11 +60,13 @@ let ReplaceData = (id, replace) => ((dispatch, getState) => {
 });
 let AddData = (id, position, worker) => ((dispatch, getState) => {
     let url = `/api/call_over/add-call-over-person/${id}`;
-    fetch(url, { method: 'post',
+    fetch(url, {
+        method: 'post',
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ position: position, worker: worker }) }).then(response => {
+        body: JSON.stringify({ position: position, worker: worker })
+    }).then(response => {
         if (response.status != 201) {
             antd_1.message.error("增加失败");
         }
@@ -96,7 +100,11 @@ exports.default = redux_actions_1.handleActions({
     },
     FinishGetData: (state, action) => {
         if (action.payload.sucess) {
-            return Object.assign({}, state, { fetching: false, items: action.payload.data });
+            let list = [];
+            for (let i of action.payload.data.person) {
+                list.push(i.id);
+            }
+            return Object.assign({}, state, { fetching: false, person_list: list, items: action.payload.data });
         }
         else {
             return Object.assign({}, state, { fetching: false });

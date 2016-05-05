@@ -1202,6 +1202,7 @@ declare namespace Antd {
         value?: any,
         style?:any,
         className?:any,
+        disabled?:boolean
     }
     /**
      * #Radio

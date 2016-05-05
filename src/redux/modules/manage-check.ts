@@ -40,9 +40,10 @@ let DeleteData = (id: number): ReduxThunk.ThunkInterface => (
         fetch(url, { method: 'delete' }).then(response => {
             if (response.status != 202) {
                 message.error("删除失败")
-            }else{
-            let state = getState()
-            dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))}
+            } else {
+                let state = getState()
+                dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))
+            }
         }
         )
     }
@@ -50,39 +51,45 @@ let DeleteData = (id: number): ReduxThunk.ThunkInterface => (
 let ReplaceData = (id: number, replace: number): ReduxThunk.ThunkInterface => (
     (dispatch: Redux.Dispatch, getState: () => any) => {
         let url = `/api/call_over/update-call-over-person/${id}`
-        fetch(url, { method: 'post',
-    				headers: {
-    					"Content-Type": "application/json"
-    				},
-            body:JSON.stringify({replace:replace})}).then(response => {
+        fetch(url, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ replace: replace })
+        }).then(response => {
             if (response.status != 202) {
                 message.error("替换失败")
-            }else{
-            let state = getState()
-            dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))
-            message.success("替换成功")
-            dispatch(showModal(false))}
+            } else {
+                let state = getState()
+                dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))
+                message.success("替换成功")
+                dispatch(showModal(false))
+            }
         }
-        )
+            )
     }
 )
-let AddData = (id: number, position: number, worker:number): ReduxThunk.ThunkInterface => (
+let AddData = (id: number, position: number, worker: number): ReduxThunk.ThunkInterface => (
     (dispatch: Redux.Dispatch, getState: () => any) => {
         let url = `/api/call_over/add-call-over-person/${id}`
-        fetch(url, { method: 'post',
-    				headers: {
-    					"Content-Type": "application/json"
-    				},
-            body:JSON.stringify({position:position,worker:worker})}).then(response => {
+        fetch(url, {
+            method: 'post',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ position: position, worker: worker })
+        }).then(response => {
             if (response.status != 201) {
                 message.error("增加失败")
-            }else{
-            let state = getState()
-            dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))
-            message.success("增加成功")
-            dispatch(AddModalShow(false))}
+            } else {
+                let state = getState()
+                dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))
+                message.success("增加成功")
+                dispatch(AddModalShow(false))
+            }
         }
-        )
+            )
     }
 )
 let ChangeReplaceId = createAction('ChangeReplaceId')
@@ -106,7 +113,11 @@ export default handleActions({
     },
     FinishGetData: (state, action) => {
         if (action.payload.sucess) {
-            return Object.assign({}, state, { fetching: false, items: action.payload.data })
+            let list = [];
+            for (let i of action.payload.data.person) {
+                list.push(i.id)
+            }
+            return Object.assign({}, state, { fetching: false,person_list:list, items: action.payload.data })
         } else {
             return Object.assign({}, state, { fetching: false })
         }
@@ -121,10 +132,10 @@ export default handleActions({
         return Object.assign({}, state, { showModal: action.payload['visiable'], modalSelect: action.payload['id'] })
     },
     AddModalShow: (state, action) => {
-        return Object.assign({}, state, { addModalShow: action.payload})
+        return Object.assign({}, state, { addModalShow: action.payload })
     },
     ChangeReplaceId: (state, action) => {
-        return Object.assign({}, state, {replaceId:action.payload})
+        return Object.assign({}, state, { replaceId: action.payload })
     },
 },
     {
@@ -135,15 +146,16 @@ export default handleActions({
         showModal: false,
         modalSelect: undefined,
         replaceId: undefined,
-        addModalShow:false
+        addModalShow: false
     })
 export interface manage_check_store {
     selectDate: Date,
     selectClassName: number,
     showModal: boolean,
     modalSelect: string,
-        replaceId: number,
-        addModalShow:boolean,
+    replaceId: number,
+    addModalShow: boolean,
+    person_list: number[],
     items: {
         id: number,
         date: any,
