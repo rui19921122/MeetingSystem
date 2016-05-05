@@ -19,8 +19,8 @@ interface Props extends React.Props<any> {
     menu: any,
     manage_check: manage_check_store,
     dispatch: Redux.Dispatch,
-    worker:worker_store,
-    position:position_store
+    worker: worker_store,
+    position: position_store
 }
 
 // We avoid using the `@connect` decorator on the class definition so
@@ -30,73 +30,73 @@ export class HomeView extends React.Component<Props, void> {
     constructor(props) {
         super(props)
     }
-    getPositionSelect():any{
-      //todo ahh
-      const radioStyle = {
-      display: 'block',
-      height: '30px',
-      lineHeight: '30px',
-    };
-      let callbackfn = (value,index:number,array:any[])=>{
-        return  (
-          <Radio key={value.id} style={radioStyle} value={value.id}>  {value.name}</Radio>
-        )
-      }
-      if(this.props.position.position.length>0){
-      }else{
-        this.props.dispatch(position_actions.GetPositionData())
-      }
-      const position = this.props.position.position
-      if (position.length>0){
-      return(
-        position.map(callbackfn)
-      )
-      }
+    getPositionSelect(): any {
+        //todo ahh
+        const radioStyle = {
+            display: 'block',
+            height: '30px',
+            lineHeight: '30px',
+        };
+        let callbackfn = (value, index: number, array: any[]) => {
+            return (
+                <Radio key={value.id} style={radioStyle} value={value.id}>  {value.name}</Radio>
+            )
+        }
+        if (this.props.position.position.length > 0) {
+        } else {
+            this.props.dispatch(position_actions.GetPositionData())
+        }
+        const position = this.props.position.position
+        if (position.length > 0) {
+            return (
+                position.map(callbackfn)
+            )
+        }
     }
     getAddRadioSelect(): any {
-      const radioStyle = {
-      display: 'block',
-      height: '30px',
-      lineHeight: '30px',
-    };
-      let callbackfn = (value,index:number,array:any[])=>{
-        return  (
-          <Radio key={value.id} style={radioStyle} value={value.id}>  {value.name}</Radio>
-        )
-      }
-      if(this.props.worker.person.length>0){
-      }else{
-        this.props.dispatch(worker_actions.GetData())
-      }
-      const worker = this.props.worker.person
-      if (worker.length>0){
-      return(
-        worker.map(callbackfn)
-      )
-      }
-     }
+        const radioStyle = {
+            display: 'block',
+            height: '30px',
+            lineHeight: '30px',
+        };
+        let callbackfn = (value, index: number, array: any[]) => {
+            return (
+                <Radio key={value.id} style={radioStyle} value={value.id}>  {value.name}</Radio>
+            )
+        }
+        if (this.props.worker.person.length > 0) {
+        } else {
+            this.props.dispatch(worker_actions.GetData())
+        }
+        const worker = this.props.worker.person
+        if (worker.length > 0) {
+            return (
+                worker.map(callbackfn)
+            )
+        }
+    }
     getRadioSelect(): any {
-      const radioStyle = {
-      display: 'block',
-      height: '30px',
-      lineHeight: '30px',
-    };
-      let callbackfn = (value,index:number,array:any[])=>{
-        return  (
-          <Radio key={value.id} style={radioStyle} value={value.id}>  {value.name}</Radio>
-        )
-      }
-      if(this.props.worker.person.length>0){
-      }else{
-        this.props.dispatch(worker_actions.GetData())
-      }
-      const worker = this.props.worker.person
-      if (worker.length>0){
-      return(
-        worker.map(callbackfn)
-      )
-      }
-     }
+        const radioStyle = {
+            display: 'block',
+            height: '30px',
+            lineHeight: '30px',
+        };
+        let callbackfn = (value, index: number, array: any[]) => {
+            return (
+                <Radio key={value.id} style={radioStyle} value={value.id}>  {value.name}</Radio>
+            )
+        }
+        if (this.props.worker.person.length > 0) {
+        } else {
+            this.props.dispatch(worker_actions.GetData())
+        }
+        const worker = this.props.worker.person
+        if (worker.length > 0) {
+            return (
+                worker.map(callbackfn)
+            )
+        }
+    }
 
     QueryButtonClick() {
         this.props.dispatch(actions.BeginGetData())
@@ -173,28 +173,28 @@ export class HomeView extends React.Component<Props, void> {
                     <Row type="flex" align='center' className="table">
                         <Col span='20'>
                             <Table dataSource={this.props.manage_check.items.person} columns={Columns} pagination={false}/>
-                            {this.props.manage_check.items.id?<Button onClick={event=>this.props.dispatch(actions.AddModalShow(true))}>添加新学员</Button>:''}
+                            {this.props.manage_check.items.id ? <Button onClick={event => this.props.dispatch(actions.AddModalShow(true)) }>添加新学员</Button> : ''}
                             <Modal title="请选择代替的职工" footer={''}
-                             visible={this.props.manage_check.showModal}
-                             onCancel={this.props.dispatch(v=>()=>this.props.dispatch(actions.showModal(false)))}>
-                             <Radio.Group defaultValue={''}
-                             onChange={event=>this.props.dispatch(actions.ReplaceData(this.props.manage_check.replaceId,(event.target as any).value))}>
-                             {this.getRadioSelect()}
-                             </Radio.Group>
-                             </Modal>
+                                visible={this.props.manage_check.showModal}
+                                onCancel={this.props.dispatch(v => () => this.props.dispatch(actions.showModal(false))) }>
+                                <Radio.Group defaultValue={''}
+                                    onChange={event => this.props.dispatch(actions.ReplaceData(this.props.manage_check.replaceId, (event.target as any).value)) }>
+                                    {this.getRadioSelect() }
+                                </Radio.Group>
+                            </Modal>
                             <Modal title="请选择增加的职工" footer={''}
-                             visible={this.props.manage_check.addModalShow}
-                             onCancel={this.props.dispatch(v=>()=>this.props.dispatch(actions.AddModalShow(false)))}>
-                             <Row>选择职工</Row>
-                             <Radio.Group defaultValue={''}>
-                             {this.getAddRadioSelect()}
-                             </Radio.Group>
-                             <Row>选择岗位</Row>
-                             <Radio.Group defaultValue={''}>
-                             {this.getPositionSelect()}
-                             <Button>添加</Button>
-                             </Radio.Group>
-                             </Modal>
+                                visible={this.props.manage_check.addModalShow}
+                                onCancel={this.props.dispatch(v => () => this.props.dispatch(actions.AddModalShow(false))) }>
+                                <Row>选择职工</Row>
+                                <Radio.Group defaultValue={''}>
+                                    {this.getAddRadioSelect() }
+                                </Radio.Group>
+                                <Row>选择岗位</Row>
+                                <Radio.Group defaultValue={''}>
+                                    {this.getPositionSelect() }
+                                    <Button>添加</Button>
+                                </Radio.Group>
+                            </Modal>
                         </Col>
                     </Row>
                 </Col>
@@ -206,7 +206,7 @@ export class HomeView extends React.Component<Props, void> {
 const mapStateToProps = (state) => ({
     menu: state.menu,
     manage_check: state.manage_check,
-    worker:state.worker,
-    position:state.position
+    worker: state.worker,
+    position: state.position
 })
 export default connect(mapStateToProps)(HomeView)
