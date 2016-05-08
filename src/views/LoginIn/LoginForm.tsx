@@ -6,7 +6,7 @@ import {login} from '../../redux/modules/login'
 export default class Login extends React.Component<any, any> {
     constructor(props) {
         super(props);
-        
+
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -24,7 +24,8 @@ export default class Login extends React.Component<any, any> {
         return (
             <Form horizontal onSubmit={this.handleSubmit}>
                 <Form.Item id="username" label="用户名" labelCol={{ span: 6 }} wrapperCol={{ span: 14 }}>
-                    <Input id="username" placeholder="请输入您的用户名" />
+                    <Input id="username"
+                      placeholder="请输入您的用户名" />
                 </Form.Item>
                 <Form.Item id="password" label="密码" labelCol={{ span: 6 }} wrapperCol={{ span: 14 }}>
                     <Input id="password" type="password" placeholder="请输入您的密码"/>

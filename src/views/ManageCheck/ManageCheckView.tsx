@@ -61,18 +61,13 @@ export class ManageCheckView extends React.Component<Props, void> {
             lineHeight: '30px',
         };
         let callbackfn = (value, index: number, array: any[]) => {
-            let disabled: boolean;
             const list = this.props.manage_check.person_list
             for (let i of this.props.worker.person) {
                 if (list.indexOf(i.id) >= 0) {
-                    disabled = true
+                     return <Radio key={value.id} style={radioStyle} value={value.id}>{value.name}</Radio>
                 } else {
-                    disabled = false
                 }
             }
-            return (
-                <Radio key={value.id} style={radioStyle} value={value.id} disabled={disabled}>{value.name}</Radio>
-            )
         }
         if (this.props.worker.person.length > 0) {
         } else {
@@ -92,28 +87,14 @@ export class ManageCheckView extends React.Component<Props, void> {
             lineHeight: '30px',
         };
         let callbackfn = (value, index: number, array: any[]) => {
-            let disabled: boolean;
-            const list = this.props.manage_check.person_list
-            if (list && list.length > 0) {
-                for (let i of this.props.worker.person) {
-                    if (list.indexOf(i.id)) {
-                        disabled = true
-                    } else {
-                        disabled = false
-                    }
-                }
-                return (
-                    <Radio key={value.id} style={radioStyle} value={value.id} disabled={disabled}>{value.name}</Radio>
-                )
-            } else {
-                return
-            }
+          return <Radio key={value.id} style={radioStyle} value={value.id}>{value.name}</Radio>
         }
         if (this.props.worker.person.length > 0) {
         } else {
             this.props.dispatch(worker_actions.GetData())
         }
-        const worker = this.props.worker.person
+        const worker = this.props.manage_check.replace
+        console.log(worker)
         if (worker.length > 0) {
             return (
                 worker.map(callbackfn)
@@ -150,14 +131,15 @@ export class ManageCheckView extends React.Component<Props, void> {
     render() {
         window.document.title = '预考勤模块';
         const Option = Select.Option
+        const lock = this.props.manage_check.items.lock;
         let renderIndexTitle = (text, record, index) => {
             return index + 1
         }
         let renderOperate = (text, record, index) => {
             if (record.study) {
-                return <Button data-id={record.id} onClick={this.deleteButtonClicked.bind(this) }>删除</Button>
+                return <Button data-id={record.id} onClick={this.deleteButtonClicked.bind(this)} disabled={lock}>删除</Button>
             } else {
-                return <Button data-id={record.id} onClick={this.alterButtonClicked.bind(this) }>替换</Button>
+                return <Button data-id={record.id} onClick={this.alterButtonClicked.bind(this) } disabled={lock}>替换</Button>
             }
         }
         let renderAlter = (text, record, index) => {
@@ -195,10 +177,13 @@ export class ManageCheckView extends React.Component<Props, void> {
                             </Select>
                             <Button onClick={this.QueryButtonClick.bind(this) }>查询</Button></Col>
                     </Row>
+                    {lock?<Row type="flex" align='center'><h2>考勤表已锁定，无法修改</h2></Row>:''}
                     <Row type="flex" align='center' className="table">
                         <Col span='20'>
-                            <Table dataSource={this.props.manage_check.items.person} columns={Columns} pagination={false}/>
-                            {this.props.manage_check.items.id ?
+                            <Table dataSource={this.props.manage_check.items.person} columns={Columns}
+                                rowKey={record=>record.id}
+                                    pagination={false}/>
+                            {this.props.manage_check.items.id && !lock ?
                                 <Row type='flex' align='center'>
                                     <Button onClick={event => this.props.dispatch(actions.AddModalShow(true)) }>添加新学员</Button>
                                 </Row>

@@ -34,7 +34,7 @@ let GetData = (): ReduxThunk.ThunkInterface => (
 export let actions = {
     BeginGetData,
     FinishGetData,
-    GetData
+    GetData,
 };
 export default handleActions({
     BeginGetData: (state, action) => {
