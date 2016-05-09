@@ -6,6 +6,7 @@ import menu from './modules/menu'
 import login from './modules/login'
 import manage_check from './modules/manage-check'
 import position from './modules/position'
+import study from './modules/study'
 
 export default combineReducers({
   counter,
@@ -14,5 +15,6 @@ export default combineReducers({
   menu,
   login,
   manage_check,
-  position
+  position,
+  study
 })

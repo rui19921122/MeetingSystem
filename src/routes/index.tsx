@@ -10,11 +10,13 @@ import CoreLayout from './../layouts/CoreLayout/CoreLayout'
 import HomeView from './../views/HomeView/HomeView'
 import LoginIn from './../views/LoginIn/LoginIn'
 import ManageCheck from './../views/ManageCheck'
+import UnlearnedStudy from './../views/UnlearnedStudy'
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path="login" component={ LoginIn }/>
     <Route path="manage-check" component={ ManageCheck }/>
+    <Route path="manage-study" component={ UnlearnedStudy }/>
   </Route>
 )
