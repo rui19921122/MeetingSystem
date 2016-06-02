@@ -16,7 +16,7 @@ export class Login extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <Row className='form' type="flex" justify="center"><Col span="10">
+                <Row className='form' type="flex" justify="center"><Col span={10}>
                     <LoginForm  {...this.props}/></Col></Row></div>
         )
     }

@@ -18,7 +18,9 @@ export function getMenu():ReduxThunk.ThunkInterface {
       return
     }
     else {
-      return fetch('/api/menu/get-menu').then(response=> {
+      return fetch('/api/menu/get-menu',{
+        credentials:'include',
+      }).then(response=> {
         switch (response.status) {
           case 200:
             response.json().then(json=>dispatch(updateMenu(json)));

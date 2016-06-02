@@ -11,6 +11,10 @@ import HomeView from './../views/HomeView/HomeView'
 import LoginIn from './../views/LoginIn/LoginIn'
 import ManageCheck from './../views/ManageCheck'
 import UnlearnedStudy from './../views/UnlearnedStudy'
+import LearnedStudy from './../views/LearnedStudy'
+import LearnedAccident from './../views/LearnedAccident'
+import UnlearnedAccident from './../views/UnlearnedAccident'
+import ClassPlanView from './../views/ClassPlan'
 
 export default (store) => (
   <Route path='/' component={CoreLayout}>
@@ -18,5 +22,9 @@ export default (store) => (
     <Route path="login" component={ LoginIn }/>
     <Route path="manage-check" component={ ManageCheck }/>
     <Route path="manage-study" component={ UnlearnedStudy }/>
+    <Route path="query-study" component={ LearnedStudy }/>
+    <Route path="query-accident" component={ LearnedAccident }/>
+    <Route path="manage-accident" component={ UnlearnedAccident }/>
+    <Route path="class-plan" component={ ClassPlanView }/>
   </Route>
 )

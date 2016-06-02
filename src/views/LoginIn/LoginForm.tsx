@@ -23,15 +23,15 @@ export default class Login extends React.Component<any, any> {
     render() {
         return (
             <Form horizontal onSubmit={this.handleSubmit}>
-                <Form.Item id="username" label="用户名" labelCol={{ span: 6 }} wrapperCol={{ span: 14 }}>
+                <Form.Item id="username" label="用户名" labelCol={{ span: 6,offset:0 }} wrapperCol={{ span: 14,offset:0 }}>
                     <Input id="username"
                       placeholder="请输入您的用户名" />
                 </Form.Item>
-                <Form.Item id="password" label="密码" labelCol={{ span: 6 }} wrapperCol={{ span: 14 }}>
+                <Form.Item id="password" label="密码" labelCol={{ span: 6,offset:0 }} wrapperCol={{ span: 14,offset:0 }}>
                     <Input id="password" type="password" placeholder="请输入您的密码"/>
                 </Form.Item>
                 <Row>
-                    <Col span="16" offset="6">
+                    <Col span={16} offset="6">
                         <Button type="primary" htmlType="submit">登陆</Button>
                     </Col>
                 </Row></Form>)

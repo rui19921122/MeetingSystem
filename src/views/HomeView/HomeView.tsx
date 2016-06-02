@@ -31,7 +31,7 @@ export class HomeView extends React.Component<Props, void> {
   render() {
     return (
       <Row>
-        <Col span="4">
+        <Col span={4}>
           <CustomMenu menu={this.props.menu} dispatch={this.props.dispatch}/>
         </Col></Row>
     )

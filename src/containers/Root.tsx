@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
-import Store = Redux.Store;
+import Store = Redux.Store
+declare let __DEBUG__:any;
+declare let __DEBUG_NEW_WINDOW__:any;
 interface Props{
   history:any,
   routes:JSX.Element,
@@ -19,9 +21,6 @@ export default class Root extends React.Component<Props,any> {
   }
 
   get devTools () {
-    let __DEBUG__ = true
-    let __DEBUG_NEW_WINDOW__ = true;
-    //删除上述两个语句，在生产环境中
     if (__DEBUG__) {
       if (__DEBUG_NEW_WINDOW__) {
         if (!(window as any).devToolsExtension) {

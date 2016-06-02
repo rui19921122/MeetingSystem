@@ -1,4 +1,3 @@
-/// <reference path="main/ambient/antd/index.d.ts" />
 /// <reference path="main/ambient/node/index.d.ts" />
 /// <reference path="main/ambient/react-dom/index.d.ts" />
 /// <reference path="main/ambient/react-redux/index.d.ts" />

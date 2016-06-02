@@ -1,5 +1,4 @@
 /// <reference path="browser/Custom/window.d.ts" />
-/// <reference path="browser/ambient/antd/index.d.ts" />
 /// <reference path="browser/ambient/node/index.d.ts" />
 /// <reference path="browser/ambient/react-dom/index.d.ts" />
 /// <reference path="browser/ambient/react-redux/index.d.ts" />

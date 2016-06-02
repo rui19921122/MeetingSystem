@@ -7,6 +7,8 @@ import login from './modules/login'
 import manage_check from './modules/manage-check'
 import position from './modules/position'
 import study from './modules/study'
+import accident from './modules/accident'
+import class_plan from './modules/class_plan'
 
 export default combineReducers({
   counter,
@@ -16,5 +18,7 @@ export default combineReducers({
   login,
   manage_check,
   position,
-  study
+  study,
+  accident,
+  class_plan
 })

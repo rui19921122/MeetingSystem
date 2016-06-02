@@ -15,7 +15,10 @@ let GetPositionData = (): ReduxThunk.ThunkInterface => (
   // 获取本部门所有职位数
     (dispatch: Redux.Dispatch, state: () => any) => {
         let url = '/api/worker/position/';
-        fetch(url).then(response => {
+        fetch(url,{
+
+          credentials:'include',
+        }).then(response => {
             switch (response.status) {
                 case 200:
                     response.json().then(json=>dispatch(FinishGetPositionData(json)));

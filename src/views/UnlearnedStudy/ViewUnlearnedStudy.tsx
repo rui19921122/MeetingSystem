@@ -1,8 +1,9 @@
 ///<reference path="../../../typings/browser.d.ts"/>
 
+import AddStudyModalForm from './AddStudyModalForm'
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {Row, Col, Table, Button} from 'antd'
+import {Row, Col, Table, Button, Modal, Form} from 'antd'
 import CustomMenu from '../../components/Menu'
 import {actions, StudyInterface} from '../../redux/modules/study'
 
@@ -16,7 +17,7 @@ import {actions, StudyInterface} from '../../redux/modules/study'
 interface Props extends React.Props<any> {
     study: StudyInterface,
     menu: any,
-    dispatch: Redux.Dispatch
+  dispatch:Redux.Dispatch,
 }
 
 // We avoid using the `@connect` decorator on the class definition so
@@ -30,8 +31,8 @@ export class ViewUnlearnedStudy extends React.Component<Props, void> {
         this.props.dispatch(actions.get_unlearn_department_study())
     }
     render() {
-        const title_length = 10
-        const colunms: Antd.Columns = [
+      const title_length = 10;
+      const colunms = [
             {
                 title: '序号',
                 render: (text, record, index) => {
@@ -128,38 +129,51 @@ export class ViewUnlearnedStudy extends React.Component<Props, void> {
                 key: 'control',
                 width: '10%',
                 render: (text, record, index) => {
-                    let disabled
-                    if (record.checked_by_first || record.checked_by_second || record.checked_by_third || record.checked_by_forth) {
-                        disabled = true
-                    } else {
-                        disabled = false
-                    }
-                    return <Button disabled={disabled}>删除</Button>
+                  let disabled;
+                  disabled = !!(record.checked_by_first || record.checked_by_second || record.checked_by_third || record.checked_by_forth);
+                  return <Button disabled={disabled}
+                                 data-id={record.id}
+                                 onClick={(event) => {
+                            const id = record.id;
+                            this.props.dispatch(actions.delete_study(id))
+                        } }
+                  >删除</Button>
                 }
             }
-        ]
+      ];
         return (
             <Row>
-                <Col span="4">
+                <Col span={4}>
                     <CustomMenu menu={this.props.menu} dispatch={this.props.dispatch}/>
                 </Col>
-                <Col span="20">
-                    <Row type='flex' align='center'>
+                <Col span={20}>
+                    <Row type='flex' justify='center'>
                         <h1 className='title-header'>未全部完成的业务学习管理</h1></Row>
-                    <Row type='flex' align='center'>
-                        <Button onClick={()=>{console.log()}}>
-                          增加业务学习
+                    <Row type='flex' justify='center'>
+                      <Button onClick={() => { this.props.dispatch(actions.SHOW_ADD_STUDY_MODAL(true)) } }>
+                        增加业务学习
                         </Button>
                     </Row>
-                    <Row type='flex' align='center' className='table'>
-                        <Col span='20'>
+                    <Row type='flex' justify='center' className='table'>
+                        <Col span={20}>
                             <Table dataSource={this.props.study.items}
-                                columns={colunms}
-                                pagination={false}
+                                   columns={colunms}
+                                   pagination={false}
+                                   rowKey={(value) => value.id}
                                 />
                         </Col>
                     </Row>
                 </Col>
+              <Modal visible={this.props.study.show_study}
+                     onCancel={() => this.props.dispatch(actions.SHOW_ADD_STUDY_MODAL(false)) }
+                     width='80%'
+                     footer=''>
+                <Row>
+                  <Col>
+                    <AddStudyModalForm dispatch={this.props.dispatch}/>
+                  </Col>
+                </Row>
+              </Modal>
             </Row >
         )
     }
@@ -168,5 +182,5 @@ export class ViewUnlearnedStudy extends React.Component<Props, void> {
 const mapStateToProps = (state) => ({
     menu: state.menu,
     study: state.study,
-})
+});
 export default connect(mapStateToProps)(ViewUnlearnedStudy)

@@ -19,7 +19,10 @@ let GetData = (date?: Date, classNumber?: number): ReduxThunk.ThunkInterface => 
     let url = '/api/call_over/get-call-over-person/?';
     url = url + 'date=' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     url = url + '&day-number=' + classNumber
-    fetch(url).then(response => {
+    fetch(url,
+
+      {credentials: 'include',}
+    ).then(response => {
       switch (response.status) {
         case 200:
           response.json().then(json => dispatch(FinishGetData({ sucess: true, data: json })));
@@ -53,6 +56,7 @@ let ReplaceData = (id: number, replace: number): ReduxThunk.ThunkInterface => (
     let url = `/api/call_over/update-call-over-person/${id}`
     fetch(url, {
       method: 'post',
+      credentials: 'include',
       headers: {
         "Content-Type": "application/json"
       },
@@ -72,8 +76,9 @@ let ReplaceData = (id: number, replace: number): ReduxThunk.ThunkInterface => (
 )
 let AddData = (id: number, position: number, worker: number): ReduxThunk.ThunkInterface => (
   (dispatch: Redux.Dispatch, getState: () => any) => {
-    let url = `/api/call_over/add-call-over-person/${id}`
+    let url = `/api/call_over/add-call-over-person/${id}/`;
     fetch(url, {
+      credentials: 'include',
       method: 'post',
       headers: {
         "Content-Type": "application/json"
