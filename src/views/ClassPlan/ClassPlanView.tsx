@@ -30,6 +30,7 @@ export class ClassPlanView extends React.Component<Props, any> {
     super(props)
   }
 
+
   render() {
     const columns = [{
       title: '序号',
@@ -58,7 +59,7 @@ export class ClassPlanView extends React.Component<Props, any> {
             </Col>
           </Row>
           {!this.props.class_plan.items ?
-            <Row justify='center' type='flex' className='block'>
+            <Row justify='center' type='flex' className='block' style={{paddingTop:'5px'}}>
               <Col>没有发现当日的班计划，你可以尝试
                             <Upload action={'/api/upload/class-plan/' + this.props.class_plan.select_date}
                                 onChange={(info) => {

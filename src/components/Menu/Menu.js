@@ -41,6 +41,7 @@ class CustomMenu extends React.Component {
         }
     }
     render() {
+        const Item = antd_1.Menu.Item;
         return (React.createElement(antd_1.Menu, {mode: "inline"}, this.props.menu.items.map(CustomMenu.process)));
     }
 }

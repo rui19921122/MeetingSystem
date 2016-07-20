@@ -2,8 +2,9 @@
 
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {Row, Col, DatePicker, Select, Button, Table, Modal, Radio, Form} from 'antd'
+import {Row, Col, DatePicker, Select, Button, Table, Modal, Radio, Form, TableProps, Input} from 'antd'
 import CustomMenu from '../../components/Menu'
+import ChangePasswordModal from './ChangePasswordModal'
 import {actions, manage_check_store} from '../../redux/modules/manage-check'
 import {actions as worker_actions, worker_store} from '../../redux/modules/worker'
 import {actions as position_actions, position_store} from '../../redux/modules/position';
@@ -150,15 +151,22 @@ export class ManageCheckView extends React.Component<Props, void> {
             { title: "操作", key: "operate", render: renderOperate, width: "20%" },
       ];
 
-        return (
+      let scrapy_col;
+      scrapy_col = [
+        {title: '序号', dataIndex: 'number', key: 'index', width: '10%'},
+        {title: '标题', dataIndex: 'title', key: 'title', width: '30%'},
+        {title: '内容', dataIndex: 'content', key: 'content', width: '60%'},
+      ];
+      return (
             <Row>
                 <Col span={4}>
                     <CustomMenu menu={this.props.menu} dispatch={this.props.dispatch}/>
                 </Col>
                 <Col span={20}>
-                    <Row>
+                    <Row type={'flex'} justify={'center'} align={'middle'}>
                       <Col>
-                        <h1 className="title-header">预考勤模块</h1>
+                        <h1 className="title-header">预考勤模块<Button onClick={
+                          ()=>this.props.dispatch(actions.change_password_modal(true))}>更改路局网站信息</Button></h1>
                       </Col>
                     </Row>
                     <Row type="flex" justify="center">
@@ -175,16 +183,34 @@ export class ManageCheckView extends React.Component<Props, void> {
                   {lock ?<Row type="flex" justify='center'><Col><h2>考勤表已锁定，无法修改</h2></Col></Row>: ''}
                     <Row type="flex" justify='center' className="table">
                         <Col span={20}>
+                          {/*考勤表数据*/}
+                          <h1 style={{textAlign:'center'}}>预考勤数据</h1>
                             <Table dataSource={this.props.manage_check.items.person} columns={Columns}
-                                rowKey={record=>record.id}
-                                    pagination={false}/>
+                                   rowKey={record=>record.id}
+                                   pagination={false}/>
                             {this.props.manage_check.items.id && !lock ?
                                 <Row type='flex' justify='center'>
                                   <Col>
-                                    <Button onClick={event => this.props.dispatch(actions.AddModalShow(true)) }>添加新学员</Button>
+                                    <Button style={{marginTop:'15px' }}
+                                      onClick={event => this.props.dispatch(actions.AddModalShow(true)) }>添加新学员</Button>
                                   </Col>
                                 </Row>
                                 : ''}
+                          {/*路局班前预想表数据*/}
+                          <h1 style={{textAlign:'center'}}>路局班前预想表数据</h1>
+                          <Table columns={scrapy_col} dataSource={this.props.manage_check.items.scrapy}
+                                 locale={{emptyText:'尚无数据,您可以点击下方的添加输入链接地址以添加'}}
+                                 bordered={true}
+                          />
+                          {this.props.manage_check.items.id && !lock ?
+                            <Row type='flex' justify='center' align={'middle'}>
+                              <Input placeholder={'请输入URL地址'}
+                                     onChange={(event)=>this.props.dispatch(actions.ChangeUrlValue((event.target as any).value))}
+                              /><Button onClick={()=>this.props.dispatch(actions.AddScrapyData())}
+                                        disabled={this.props.manage_check.items.lock || this.props.manage_check.url_button_disabled}
+                            >添加</Button>
+                            </Row>
+                            : ''}
                             <Modal title="请选择代替的职工" footer={''}
                                 visible={this.props.manage_check.showModal}
                                 onCancel={this.props.dispatch(v => () => this.props.dispatch(actions.showModal(false))) }>
@@ -201,6 +227,13 @@ export class ManageCheckView extends React.Component<Props, void> {
                                                     dispatch={this.props.dispatch}
                                                     manage_check={this.props.manage_check}/>
                             </Modal>
+                          <Modal title="更改路局网站密码" footer={''}
+                                 visible={this.props.manage_check.change_password_modal}
+                                 onCancel={(event)=>this.props.dispatch(this.props.dispatch(actions.change_password_modal(false))) }>
+                            <ChangePasswordModal
+                              dispatch={this.props.dispatch} />
+                          </Modal>
+
                         </Col>
                     </Row>
                     <Row justify='center' type='flex' style={{marginTop:'20px'}}>

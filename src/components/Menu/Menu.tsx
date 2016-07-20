@@ -52,6 +52,7 @@ export default class CustomMenu extends React.Component<props, void> {
 
 
   render() {
+    const Item = Menu.Item;
     return (
       <Menu
         mode="inline"

@@ -31,7 +31,7 @@ class ClassPlanView extends React.Component {
             this.props.dispatch(class_plan_1.actions.SelectDateChange(value));
             this.props.dispatch(class_plan_1.actions.query_class_plan());
         }}))), !this.props.class_plan.items ?
-            React.createElement(antd_1.Row, {justify: 'center', type: 'flex', className: 'block'}, React.createElement(antd_1.Col, null, "没有发现当日的班计划，你可以尝试", React.createElement(antd_1.Upload, {action: '/api/upload/class-plan/' + this.props.class_plan.select_date, onChange: (info) => {
+            React.createElement(antd_1.Row, {justify: 'center', type: 'flex', className: 'block', style: { paddingTop: '5px' }}, React.createElement(antd_1.Col, null, "没有发现当日的班计划，你可以尝试", React.createElement(antd_1.Upload, {action: '/api/upload/class-plan/' + this.props.class_plan.select_date, onChange: (info) => {
                 let file = info.file;
                 if (file.status === 'done') {
                     antd_1.message.success("上传成功，即将刷新页面");
