@@ -44,7 +44,7 @@ let DeleteData = (id) => ((dispatch, getState) => {
     });
 });
 let ReplaceData = (id, replace) => ((dispatch, getState) => {
-    let url = `/api/call_over/update-call-over-person/${id}`;
+    let url = `/api/call_over/update-call-over-person/${id}/`;
     fetch(url, {
         method: 'post',
         credentials: 'include',

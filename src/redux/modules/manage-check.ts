@@ -53,7 +53,7 @@ let DeleteData = (id: number): ReduxThunk.ThunkInterface => (
 )
 let ReplaceData = (id: number, replace: number): ReduxThunk.ThunkInterface => (
   (dispatch: Redux.Dispatch, getState: () => any) => {
-    let url = `/api/call_over/update-call-over-person/${id}`
+      let url = `/api/call_over/update-call-over-person/${id}/`;
     fetch(url, {
       method: 'post',
       credentials: 'include',

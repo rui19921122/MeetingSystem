@@ -1,5 +1,4 @@
 ///<reference path="../../../typings/browser.d.ts"/>
-///<reference path="../../../node_modules/antd/type-definitions/antd.d.ts"/>
 "use strict";
 const AddAccidentModalForm_1 = require('./AddAccidentModalForm');
 const React = require('react');

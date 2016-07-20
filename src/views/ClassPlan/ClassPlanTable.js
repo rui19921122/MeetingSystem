@@ -39,12 +39,17 @@ class ClassPlanTable extends React.Component {
         let get_parent = (origin, child) => {
             let parent = [];
             let first = false;
-            let each;
-            for (each of origin) {
-                if (each[2].find((n) => n == child.key) != undefined) {
-                    parent = each;
-                    each[2][0] == child.key ? first = true : first = false;
-                    break;
+            for (let each of origin) {
+                for (let f of each[2]) {
+                    if (f == child.key) {
+                        parent = each;
+                        if (each[2][0] == child.key) {
+                            first = true;
+                            return {
+                                parent: parent, first: first
+                            };
+                        }
+                    }
                 }
             }
             return {
@@ -93,7 +98,7 @@ class ClassPlanTable extends React.Component {
                 width: '10%',
                 render(text, record, index) {
                     let data = get_parent(father_collection, record);
-                    if (data.parent && data.first) {
+                    if (data && data.parent && data.first) {
                         return {
                             children: data.parent[0],
                             props: { rowSpan: data.parent[2].length }
@@ -110,7 +115,7 @@ class ClassPlanTable extends React.Component {
         ];
         return (React.createElement(antd_1.Row, {type: "flex", justify: "center"}, React.createElement(antd_1.Col, {span: 18}, React.createElement(antd_1.Table, {columns: header, className: 'justify_table', dataSource: all_collection, pagination: false, bordered: true}), this.props.class_plan.items.lock ?
             React.createElement(antd_1.Row, {type: 'flex', justify: 'center'}, React.createElement(antd_1.Col, null, "当前计划表已锁定，无法更改计划 ")) :
-            React.createElement(antd_1.Row, {type: 'flex', justify: 'center', className: 'center'}, React.createElement(antd_1.Col, {span: 20}, "当前考勤表未锁定，您可以", React.createElement(antd_1.Upload, {action: '/api/upload/class-plan/' + this.props.class_plan.select_date, onChange: (info) => {
+            React.createElement(antd_1.Row, {type: 'flex', justify: 'center', className: 'center', style: { marginTop: "10px" }}, React.createElement(antd_1.Col, {span: 20}, "当前考勤表未锁定，您可以", React.createElement(antd_1.Upload, {action: '/api/upload/class-plan/' + this.props.class_plan.select_date, onChange: (info) => {
                 let file = info.file;
                 if (file.status === 'done') {
                     antd_1.message.success("上传成功，即将刷新页面");

@@ -13,7 +13,6 @@ export default class Login extends React.Component<any, any> {
     handleSubmit(e) {
         e.preventDefault();
         const { dispatch } = this.props
-
         // TODO: 解决这里无法引用this的错误
         let username = e.target.username.value
         let password = e.target.password.value
@@ -22,12 +21,12 @@ export default class Login extends React.Component<any, any> {
 
     render() {
         return (
-            <Form horizontal onSubmit={this.handleSubmit}>
-                <Form.Item id="username" label="用户名" labelCol={{ span: 6,offset:0 }} wrapperCol={{ span: 14,offset:0 }}>
+            <Form horizontal={true} onSubmit={this.handleSubmit}>
+                <Form.Item label="用户名" labelCol={{ span: 6,offset:0 }} wrapperCol={{ span: 14,offset:0 }}>
                     <Input id="username"
                       placeholder="请输入您的用户名" />
                 </Form.Item>
-                <Form.Item id="password" label="密码" labelCol={{ span: 6,offset:0 }} wrapperCol={{ span: 14,offset:0 }}>
+                <Form.Item label="密码" labelCol={{ span: 6,offset:0 }} wrapperCol={{ span: 14,offset:0 }}>
                     <Input id="password" type="password" placeholder="请输入您的密码"/>
                 </Form.Item>
                 <Row>

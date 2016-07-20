@@ -1,5 +1,4 @@
 ///<reference path="../../../typings/browser.d.ts"/>
-///<reference path="../../../node_modules/antd/type-definitions/antd.d.ts"/>
 
 import AddAccidentModalForm from './AddAccidentModalForm'
 import * as React from 'react'

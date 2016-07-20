@@ -20,5 +20,5 @@ export default combineReducers({
   position,
   study,
   accident,
-  class_plan
+  class_plan,
 })

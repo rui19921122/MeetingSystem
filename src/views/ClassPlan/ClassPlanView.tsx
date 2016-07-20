@@ -49,7 +49,7 @@ export class ClassPlanView extends React.Component<Props, any> {
           <Row type='flex' justify='center'>
             <h1 className='title-header'>班计划查询</h1>
           </Row>
-          <Row type='flex' justify='center'>
+          <Row type='flex' justify='center' style={{ marginBottom: '10px' }}>
             <Col>
               <DatePicker onChange={(value)=>{
               this.props.dispatch(actions.SelectDateChange(value));
@@ -60,7 +60,8 @@ export class ClassPlanView extends React.Component<Props, any> {
           {!this.props.class_plan.items ?
             <Row justify='center' type='flex' className='block'>
               <Col>没有发现当日的班计划，你可以尝试
-                <Upload action={'/api/upload/class-plan/'+this.props.class_plan.select_date} onChange={(info)=>{
+                            <Upload action={'/api/upload/class-plan/' + this.props.class_plan.select_date}
+                                onChange={(info) => {
                   let file:UploadFileProps = (info as any).file;
                   if(file.status==='done'){
                     message.success("上传成功，即将刷新页面");

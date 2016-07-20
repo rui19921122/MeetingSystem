@@ -44,14 +44,19 @@ class ClassPlanTable extends React.Component<any,any> {
     let get_parent = (origin, child)=> {
         let parent = [];
         let first = false;
-        let each;
-        for (each of origin) {
-          if (each[2].find((n)=>n == child.key) != undefined) {
-            parent = each;
-            each[2][0] == child.key ? first = true : first = false;
-            break;
+        for (let each of origin) {
+            for (let f of each[2]) {
+                if (f == child.key) {
+                    parent = each;
+                    if (each[2][0] == child.key) {
+                        first = true
+                        return {
+                          parent: parent,first: first
+                }
+                    }
+                }
+            }
           }
-        }
         return {
           parent: parent
           ,
@@ -99,9 +104,9 @@ class ClassPlanTable extends React.Component<any,any> {
         dataIndex: 'department',
         key: 'department',
         width: '10%',
-        render(text, record, index){
+        render(text, record, index) {
           let data = get_parent(father_collection, record);
-          if (data.parent && data.first) {
+          if (data && data.parent && data.first) {
             return {
               children: data.parent[0],
               props: {rowSpan: data.parent[2].length}
@@ -126,7 +131,7 @@ class ClassPlanTable extends React.Component<any,any> {
           {this.props.class_plan.items.lock ?
             <Row type='flex' justify='center'><Col>
               当前计划表已锁定，无法更改计划 </Col></Row>:
-            <Row type='flex' justify='center' className='center'>
+                    <Row type='flex' justify='center' className='center' style={{ marginTop: "10px" }}>
               <Col span={20}>
                 当前考勤表未锁定，您可以<Upload action={'/api/upload/class-plan/'+this.props.class_plan.select_date} onChange={(info)=>{
               let file = (info as any).file;

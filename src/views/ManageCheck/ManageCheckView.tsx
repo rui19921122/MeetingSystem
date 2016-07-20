@@ -16,7 +16,7 @@ import AddStudyWorkerForm from "./AddStudyWorkerForm";
 // NOTE: You can run `npm run flow:check` to check for any errors in your
 // code, or `npm i -g flow-bin` to have access to the binary globally.
 // Sorry Windows users :(.
-interface Props extends React.Props<any> {
+interface Props {
     menu: any,
     manage_check: manage_check_store,
     dispatch: Redux.Dispatch,
@@ -94,7 +94,6 @@ export class ManageCheckView extends React.Component<Props, void> {
             this.props.dispatch(worker_actions.GetData())
         }
       const worker = this.props.manage_check.replace;
-      console.log(worker);
         if (worker.length > 0) {
             return (
                 worker.map(callbackfn)
@@ -191,7 +190,7 @@ export class ManageCheckView extends React.Component<Props, void> {
                                 onCancel={this.props.dispatch(v => () => this.props.dispatch(actions.showModal(false))) }>
                                 <Radio.Group defaultValue={''}
                                     onChange={event => this.props.dispatch(actions.ReplaceData(this.props.manage_check.replaceId, (event.target as any).value)) }>
-                                    {this.getRadioSelect() }
+                                    {this.getRadioSelect()}
                                 </Radio.Group>
                             </Modal>
                             <Modal title="请选择增加的职工" footer={''}
@@ -203,6 +202,8 @@ export class ManageCheckView extends React.Component<Props, void> {
                                                     manage_check={this.props.manage_check}/>
                             </Modal>
                         </Col>
+                    </Row>
+                    <Row justify='center' type='flex' style={{marginTop:'20px'}}>
                     </Row>
                 </Col>
             </Row>

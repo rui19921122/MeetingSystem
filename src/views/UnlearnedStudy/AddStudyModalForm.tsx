@@ -2,9 +2,7 @@
 import * as React from 'react'
 import {Row, Col, Form, Radio, Button, FormComponent} from 'antd'
 import {actions as study_actions} from '../../redux/modules/study';
-interface addStudyFormInterface extends FormComponent {
-  dispatch:Redux.Dispatch,
-}
+
 class addStudyForm extends React.Component<any, any> {
   handleSubmit() {
   }

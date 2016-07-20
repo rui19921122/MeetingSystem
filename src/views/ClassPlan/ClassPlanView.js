@@ -27,7 +27,7 @@ class ClassPlanView extends React.Component {
                 title: ''
             }
         ];
-        return (React.createElement(antd_1.Row, null, React.createElement(antd_1.Col, {span: 4}, React.createElement(Menu_1.default, {menu: this.props.menu, dispatch: this.props.dispatch})), React.createElement(antd_1.Col, {span: 20}, React.createElement(antd_1.Row, {type: 'flex', justify: 'center'}, React.createElement("h1", {className: 'title-header'}, "班计划查询")), React.createElement(antd_1.Row, {type: 'flex', justify: 'center'}, React.createElement(antd_1.Col, null, React.createElement(antd_1.DatePicker, {onChange: (value) => {
+        return (React.createElement(antd_1.Row, null, React.createElement(antd_1.Col, {span: 4}, React.createElement(Menu_1.default, {menu: this.props.menu, dispatch: this.props.dispatch})), React.createElement(antd_1.Col, {span: 20}, React.createElement(antd_1.Row, {type: 'flex', justify: 'center'}, React.createElement("h1", {className: 'title-header'}, "班计划查询")), React.createElement(antd_1.Row, {type: 'flex', justify: 'center', style: { marginBottom: '10px' }}, React.createElement(antd_1.Col, null, React.createElement(antd_1.DatePicker, {onChange: (value) => {
             this.props.dispatch(class_plan_1.actions.SelectDateChange(value));
             this.props.dispatch(class_plan_1.actions.query_class_plan());
         }}))), !this.props.class_plan.items ?

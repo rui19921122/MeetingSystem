@@ -21,6 +21,6 @@ exports.default = redux_1.combineReducers({
     position: position_1.default,
     study: study_1.default,
     accident: accident_1.default,
-    class_plan: class_plan_1.default
+    class_plan: class_plan_1.default,
 });
 //# sourceMappingURL=rootReducer.js.map
