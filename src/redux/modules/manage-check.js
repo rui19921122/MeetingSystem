@@ -13,6 +13,34 @@ let ChangeDatePicker = redux_actions_1.createAction('ChangeDatePicker');
 let ChangeSelect = redux_actions_1.createAction('ChangeSelect');
 let showModal = redux_actions_1.createAction('showModal');
 let ChangeUrlValue = redux_actions_1.createAction('ChangeUrlValue');
+let ChangePassword = (username, password) => ((dispatch, getState) => {
+    if (username.length > 0 && password.length > 0) {
+        fetch('/api/scrapy/about-password/', {
+            credentials: 'include',
+            method: 'post',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ password: password, username: username })
+        }).then(response => {
+            if (response.status == 200) {
+                antd_1.message.success("成功更改了密码");
+                dispatch(exports.actions.change_password_modal(false));
+            }
+            else {
+                response.json().then(json => {
+                    try {
+                        antd_1.message.error("错误," + json['error']);
+                    }
+                    catch (e) {
+                        antd_1.message.error("发生错误");
+                    }
+                });
+            }
+        });
+    }
+    else {
+        antd_1.message.error("用户名或密码字段不能为空");
+    }
+});
 let GetData = (date, classNumber) => ((dispatch, getState) => {
     let state = getState();
     let url = '/api/call_over/get-call-over-person/?';
@@ -88,7 +116,7 @@ let AddData = (id, position, worker) => ((dispatch, getState) => {
 });
 let update_scrapy_data = redux_actions_1.createAction('UPDATE_SCRAPY_DATA');
 let change_scrapy_button_status = redux_actions_1.createAction('CHANGE_SCRAPY_BUTTON_STATUS');
-let AddScrapyData = () => ((dispatch, getState) => {
+let AddScrapyData = (input) => ((dispatch, getState) => {
     let state = getState();
     let manage_check = state.manage_check;
     const url = state.manage_check.url_value;
@@ -111,6 +139,7 @@ let AddScrapyData = () => ((dispatch, getState) => {
             response.json().then(json => antd_1.message.error(json['error']));
         }
         else {
+            input.refs['input'].value = '';
             response.json().then(json => dispatch(update_scrapy_data(json['data'])));
         }
     });
@@ -134,6 +163,7 @@ exports.actions = {
     AddScrapyData: AddScrapyData,
     change_scrapy_button_status: change_scrapy_button_status,
     change_password_modal: change_password_modal,
+    ChangePassword: ChangePassword,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = redux_actions_1.handleActions({
@@ -181,6 +211,10 @@ exports.default = redux_actions_1.handleActions({
     ChangeReplaceId: (state, action) => {
         return Object.assign({}, state, { replaceId: action.payload });
     },
+    UPDATE_SCRAPY_DATA: (state, action) => {
+        let new_items = Object.assign({}, state.items, { scrapy: action.payload });
+        return Object.assign({}, state, { items: new_items });
+    }
 }, {
     selectDate: new Date(),
     selectClassName: 1,

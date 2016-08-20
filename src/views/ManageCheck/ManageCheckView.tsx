@@ -205,8 +205,9 @@ export class ManageCheckView extends React.Component<Props, void> {
                           {this.props.manage_check.items.id && !lock ?
                             <Row type='flex' justify='center' align={'middle'}>
                               <Input placeholder={'请输入URL地址'}
+                                    ref="url_input"
                                      onChange={(event)=>this.props.dispatch(actions.ChangeUrlValue((event.target as any).value))}
-                              /><Button onClick={()=>this.props.dispatch(actions.AddScrapyData())}
+                              /><Button onClick={()=>this.props.dispatch(actions.AddScrapyData(this.refs['url_input']))}
                                         disabled={this.props.manage_check.items.lock || this.props.manage_check.url_button_disabled}
                             >添加</Button>
                             </Row>

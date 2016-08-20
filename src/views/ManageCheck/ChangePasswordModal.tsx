@@ -22,7 +22,9 @@ class ChangePasswordModal extends React.Component<props, any> {
     return (
       <Form onSubmit={v=>{
         v.preventDefault();
-        console.log(getFieldProps('username').value)
+        console.log(actions.ChangePassword)
+        this.props.dispatch(actions.ChangePassword(getFieldProps('username').value,
+                            getFieldProps('password').value))
       }}
             horizontal={true}>
         <Row type={'flex'} align={'middle'} justify={'center'}>

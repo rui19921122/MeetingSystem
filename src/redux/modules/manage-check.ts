@@ -15,6 +15,33 @@ let ChangeDatePicker = createAction('ChangeDatePicker');
 let ChangeSelect = createAction('ChangeSelect');
 let showModal = createAction('showModal');
 let ChangeUrlValue = createAction('ChangeUrlValue');
+let ChangePassword = (username:string, password:string):ReduxThunk.ThunkInterface =>(
+    (dispatch:Redux.Dispatch, getState:()=>any)=> {
+        if(username.length>0 && password.length>0){
+            fetch('/api/scrapy/about-password/', {
+                credentials: 'include',
+                method: 'post',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password: password, username: username })
+            }).then(response => {
+                if (response.status == 200) {
+                    message.success("成功更改了密码")
+                    dispatch(actions.change_password_modal(false))
+                } else {
+                    response.json().then(json => {
+                        try {
+                            message.error("错误," + json['error'])
+                        }catch(e){
+                            message.error("发生错误")
+                        }
+                    })
+                }
+                })
+        }else{
+            message.error("用户名或密码字段不能为空")
+        }
+    }
+);
 let GetData = (date?: Date, classNumber?: number): ReduxThunk.ThunkInterface => (
   (dispatch: Redux.Dispatch, getState: () => any) => {
     let state = getState();
@@ -46,7 +73,9 @@ let DeleteData = (id: number): ReduxThunk.ThunkInterface => (
         message.error("删除失败")
       } else {
         let state = getState();
-        dispatch(GetData((state.manage_check as manage_check_store).selectDate, (state.manage_check as manage_check_store).selectClassName))
+        dispatch(GetData((
+            state.manage_check as manage_check_store).selectDate,
+            (state.manage_check as manage_check_store).selectClassName))
       }
     }
     )
@@ -100,7 +129,7 @@ let AddData = (id: number, position: number, worker: number): ReduxThunk.ThunkIn
 );
 let update_scrapy_data = createAction('UPDATE_SCRAPY_DATA');
 let change_scrapy_button_status = createAction('CHANGE_SCRAPY_BUTTON_STATUS');
-let AddScrapyData = () =>(
+let AddScrapyData = (input) =>(
   (dispatch, getState)=> {
     let state = getState();
     let manage_check:manage_check_store = state.manage_check;
@@ -123,6 +152,7 @@ let AddScrapyData = () =>(
       if (response.status != 200) {
         response.json().then(json=>message.error(json['error']))
       } else {
+          input.refs['input'].value = ''
         response.json().then(json=>dispatch(update_scrapy_data(json['data'])));
       }
     })
@@ -147,6 +177,7 @@ export let actions = {
   AddScrapyData,
   change_scrapy_button_status,
   change_password_modal,
+    ChangePassword,
 };
 export default handleActions({
     CHANGE_SCRAPY_BUTTON_STATUS: (state, action)=> {
@@ -192,6 +223,10 @@ export default handleActions({
   ChangeReplaceId: (state, action) => {
     return Object.assign({}, state, { replaceId: action.payload })
   },
+  UPDATE_SCRAPY_DATA: (state, action) => {
+      let new_items = Object.assign({}, state.items, { scrapy: action.payload })
+      return Object.assign({}, state, { items: new_items })
+  }
 },
   {
     selectDate: new Date(),
