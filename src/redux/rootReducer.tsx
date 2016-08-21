@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux'
-import { routerReducer as router } from 'react-router-redux'
+import {combineReducers} from 'redux'
+import {routerReducer as router} from 'react-router-redux'
 import counter from './modules/counter'
 import worker from './modules/worker'
 import menu from './modules/menu'
@@ -9,6 +9,7 @@ import position from './modules/position'
 import study from './modules/study'
 import accident from './modules/accident'
 import class_plan from './modules/class_plan'
+import query_list from './modules/query';
 
 export default combineReducers({
   counter,
@@ -21,4 +22,5 @@ export default combineReducers({
   study,
   accident,
   class_plan,
+  query_list,
 })

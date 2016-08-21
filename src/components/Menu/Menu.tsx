@@ -8,7 +8,7 @@ import * as React from 'react'
 import {Link} from 'react-router'
 import {getMenu} from '../../redux/modules/menu'
 
-interface props extends React.Props<any> {
+interface props {
   menu:any,
   dispatch:Redux.Dispatch,
 }

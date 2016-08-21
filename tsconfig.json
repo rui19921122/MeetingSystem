@@ -6,7 +6,7 @@
     "sourceMap": true,
     "jsx": "react"
   },
-  "compileOnSave":true,
+  "compileOnSave": true,
   "exclude": [
     "node_modules",
     "typings"
