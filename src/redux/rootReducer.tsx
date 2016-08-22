@@ -10,6 +10,7 @@ import study from './modules/study'
 import accident from './modules/accident'
 import class_plan from './modules/class_plan'
 import query_list from './modules/query';
+import query_detail from './modules/query_detail'
 
 export default combineReducers({
   counter,
@@ -23,4 +24,5 @@ export default combineReducers({
   accident,
   class_plan,
   query_list,
+  query_detail
 })

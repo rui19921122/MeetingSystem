@@ -96,11 +96,13 @@ export class QueryListView extends React.Component<Props, void> {
           <Row align={'middle'} justify={'center'} type={'flex'}>
             <Col style={{margin:'0 10px'}}>
               <span>开始日期</span><DatePicker
+              defaultValue={this.props.query_list.start|| new Date()}
               onChange={(value)=>this.props.dispatch(actions.UpdateDatePicker({type:'start',value:value}))}
             />
             </Col>
             <Col style={{margin:'0 10px'}}>
               <span>结束日期</span><DatePicker
+              defaultValue={this.props.query_list.end|| new Date()}
               onChange={(value)=>this.props.dispatch(actions.UpdateDatePicker({type:'end',value:value}))}
             />
             </Col>
@@ -118,7 +120,7 @@ export class QueryListView extends React.Component<Props, void> {
             <Col span={17}>
               <Table columns={tableHeaders}
                      className='justify_table table'
-                     onRowClick={(value)=>this.props.dispatch(push(`/query-detail/${value.id}/`))}
+                     onRowClick={(value)=>!!value.id?this.props.dispatch(push(`/query-detail/${value.id}/`)):''}
                      dataSource={this.props.query_list.data}
                      pagination={15}
               /></Col>

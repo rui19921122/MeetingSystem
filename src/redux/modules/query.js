@@ -83,7 +83,7 @@ exports.default = redux_actions_1.handleActions({
     department_can_select: [],
     current_department: undefined,
     data: undefined,
-    start: undefined,
-    end: undefined
+    start: new Date(),
+    end: new Date()
 });
 //# sourceMappingURL=query.js.map

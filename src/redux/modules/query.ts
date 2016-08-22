@@ -99,8 +99,8 @@ export default handleActions({
   department_can_select: [],
   current_department: undefined,
   data: undefined,
-  start: undefined,
-  end: undefined
+  start: new Date(),
+  end: new Date()
 })
 export interface QueryInterface {
   fetching: boolean,

@@ -11,6 +11,7 @@ const study_1 = require('./modules/study');
 const accident_1 = require('./modules/accident');
 const class_plan_1 = require('./modules/class_plan');
 const query_1 = require('./modules/query');
+const query_detail_1 = require('./modules/query_detail');
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = redux_1.combineReducers({
     counter: counter_1.default,
@@ -24,5 +25,6 @@ exports.default = redux_1.combineReducers({
     accident: accident_1.default,
     class_plan: class_plan_1.default,
     query_list: query_1.default,
+    query_detail: query_detail_1.default
 });
 //# sourceMappingURL=rootReducer.js.map
